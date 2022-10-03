@@ -1,30 +1,20 @@
 import os
 from flask import Flask, jsonify, request
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine, text
+from middleware import middleware
+from utils.db_start import DB_start
+from utils.queries import query_total_count, query_state
 
 app = Flask(__name__)
-
 dbdir = "sqlite:///" + os.path.abspath((os.getcwd()) + "data.db")
-app.config["SQLALCHEMY_DATABASE_URI"] = dbdir
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db = SQLAlchemy(app)
-engine = create_engine(dbdir)
+
+app.wsgi_app = middleware(app.wsgi_app)
 
 
 @app.route("/count", methods=['GET'])
 def count_simulations():
-    try:
-        with engine.connect() as conn:
-            result = conn.execute(text('select COUNT(*) from Simulations'))
-            for r in result:
-                count_rows = r[0]
-    except Exception as e:
-        print('Error Connection: {}'.format(e))
-        count_rows = "Error"
-    data = {
-        "Total": count_rows
-    }
+    db_start = DB_start(dbdir)
+    query = query_total_count()
+    data = db_start.query(query)
     return jsonify(data)
 
 
@@ -32,21 +22,10 @@ def count_simulations():
 def state():
     data = request.get_json()
     id_simulations = data['id']
-    try:
-        with engine.connect() as conn:
-            result = conn.execute(text("select * from Simulations WHERE id_simulation = {}".format(id_simulations)))
-            for r in result:
-                count_rows = r[0]
-                fixture = r[1]
-    except Exception as e:
-        print('Error Connection: {}'.format(e))
-        count_rows = "Error"
-    data = {
-        "Id": count_rows,
-        "fixture": fixture
-    }
+    db_start = DB_start(dbdir)
+    query = query_state(id_simulations)
+    data = db_start.query(query)
     return jsonify(data)
-
 
 @app.route("/")
 def listing():

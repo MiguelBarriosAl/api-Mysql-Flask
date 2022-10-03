@@ -1,5 +1,4 @@
 import os
-
 from werkzeug.wrappers import Request, Response
 from dotenv import load_dotenv
 
@@ -22,11 +21,9 @@ class middleware():
         userName = request.authorization['username']
         password = request.authorization['password']
 
-        # these are hardcoded for demonstration
-        # verify the username and password from some db or env config variable
+        # verify the username and password from env config variable
         if userName == self.userName and password == self.password:
             environ['user'] = {'name': self.userName}
             return self.app(environ, start_response)
-
         res = Response(u'Authorization failed: {},{}'.format(self.userName, self.password), mimetype='text/plain', status=401)
         return res(environ, start_response)

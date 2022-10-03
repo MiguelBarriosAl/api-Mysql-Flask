@@ -58,7 +58,7 @@ class DB_sqlite3:
                         state=d[1]
                     )
                     conn.execute(query)
-                print("Data Inserted")
+                return True
             except Exception as e:
                 print('Error Connection: {}'.format(e))
             finally:
