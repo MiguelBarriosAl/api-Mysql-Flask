@@ -9,10 +9,9 @@ password = os.getenv("PASS_MIDDLEWARE")
 
 
 class middleware():
-    '''
-    Simple WSGI middleware
-    '''
-
+    """
+    WSGI middleware
+    """
     def __init__(self, app):
         self.app = app
         self.userName = user
@@ -24,9 +23,9 @@ class middleware():
         password = request.authorization['password']
 
         # these are hardcoded for demonstration
-        # verify the username and password from some database or env config variable
+        # verify the username and password from some db or env config variable
         if userName == self.userName and password == self.password:
-            environ['user'] = {'name': 'Miguel'}
+            environ['user'] = {'name': self.userName}
             return self.app(environ, start_response)
 
         res = Response(u'Authorization failed: {},{}'.format(self.userName, self.password), mimetype='text/plain', status=401)
