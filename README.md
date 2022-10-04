@@ -7,3 +7,7 @@ Middleware desarrollado para llamada de función antes de acceder a base de dato
 según que usuario se registran en .env
 
 curl -u Miguel:Barrios http://localhost:5000/count
+curl -u Miguel:Barrios -X POST http://localhost:5000/state -H "Content-Type: application/json" -d '{"id": 1}'
+
+graph
+curl -u Miguel:Barrios -X GET http://localhost:5000/graph -H "Content-Type: application/json" -d '{"id": 3}'

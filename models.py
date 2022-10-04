@@ -10,11 +10,9 @@ from sqlalchemy import ForeignKey, insert, create_engine
     the different views created in the app.
     To do this, you only have to uncomment lines 126 to 130. 
     In this way you create the db locally and insert test data.
-    
 """
 
 app = Flask(__name__)
-
 dbdir = "sqlite:///" + os.path.abspath((os.getcwd()) + "/data.db")
 app.config["SQLALCHEMY_DATABASE_URI"] = dbdir
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -95,6 +93,7 @@ class DB_sqlite3:
                 print('Error Connection: {}'.format(e))
             finally:
                 conn.close()
+
 
 try:
     data_simulations = [
