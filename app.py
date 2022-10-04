@@ -44,11 +44,7 @@ def fixtures_info():
     return "<p>Hello, World!</p>"
 
 
-@app.route("/")
-def graph():
-    return "<p>Hello, World!</p>"
-
-@app.route("/graph")
+@app.route("/graph", methods=['GET'])
 def graph():
     data = request.get_json()
     id_simulations = data['id']
