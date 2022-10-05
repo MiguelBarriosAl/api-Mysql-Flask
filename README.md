@@ -95,10 +95,10 @@ In this section I show some examples to be able to make requests to the API:
 
     curl -u Miguel:Barrios http://localhost:5000/count
 
-### Check State per Id
+### Check id Simulations per State
 
 
-    curl -u Miguel:Barrios -X POST http://localhost:5000/state -H "Content-Type: application/json" -d '{"id": 1}
+    curl -u Miguel:Barrios -X GET http://localhost:5000/state -H "Content-Type: application/json" -d '{"state": "finished"}'
 
 
 ### Get a Loss Graph

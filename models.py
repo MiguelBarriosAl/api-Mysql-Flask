@@ -21,9 +21,9 @@ db = SQLAlchemy(app)
 
 class Simulations(db.Model):
     id_simulation = db.Column(db.Integer, primary_key=True)
-    state = db.Column(db.String(20))
-    created_at = db.Column(db.DATETIME)
-    updated_at = db.Column(db.DATETIME)
+    state = db.Column(db.String(100))
+    created_at = db.Column(db.DATETIME, onupdate=datetime.datetime.now)
+    updated_at = db.Column(db.DATETIME, onupdate=datetime.datetime.now)
 
 
 class Fixtures(db.Model):
@@ -56,6 +56,7 @@ class DB_sqlite3:
                         state=d[1]
                     )
                     conn.execute(query)
+                    print("Data Inserted", query)
                 return True
             except Exception as e:
                 print('Error Connection: {}'.format(e))
@@ -71,7 +72,7 @@ class DB_sqlite3:
                         fixture=d[1]
                     )
                     conn.execute(query)
-                print("Data Inserted")
+                print("Data Inserted", query)
             except Exception as e:
                 print('Error Connection: {}'.format(e))
             finally:
@@ -88,7 +89,7 @@ class DB_sqlite3:
                         loss=d[3]
                     )
                     conn.execute(query)
-                print("Data Inserted")
+                print("Data Inserted", query)
             except Exception as e:
                 print('Error Connection: {}'.format(e))
             finally:

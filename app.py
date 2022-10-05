@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request
 from middleware import middleware
 from utils.db_start import DB_start
 from utils.graphs import graphs
-from utils.queries import query_total_count, query_state, query_graph_loss
+from utils.queries import query_total_count, query_by_state, query_graph_loss
 
 app = Flask(__name__)
 dbdir = "sqlite:///" + os.path.abspath((os.getcwd()) + "data.db")
@@ -22,10 +22,13 @@ def count_simulations():
 @app.route("/state", methods=['GET'])
 def state():
     data = request.get_json()
-    id_simulations = data['id']
+    id_simulations = data['state']
     db_start = DB_start(dbdir)
-    query = query_state(id_simulations)
-    data = db_start.query_sim(query)
+    query = query_by_state(id_simulations)
+    result = db_start.query_sim(query)
+    data = {
+        "Simulations_id": result
+    }
     return jsonify(data)
 
 
@@ -53,6 +56,7 @@ def graph():
     data = db_start.query_loss(query)
     graphs(data['Result'])
     return jsonify(data)
+
 
 if __name__ == "__main__":
     app.run('127.0.0.1', '5000', debug=True)
