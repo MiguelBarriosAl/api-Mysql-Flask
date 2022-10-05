@@ -11,16 +11,15 @@ class DB_start:
         app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
         self.engine = create_engine(dbdir)
 
-    def query_sim(self, query: str) -> list:
+    def query_sim(self, key, query) -> list:
         rows = []
         try:
             with self.engine.connect() as conn:
+                print(query)
                 result = conn.execute(text(query))
                 for row in result:
-                    data = {
-                        "id_simulation": row[0],
-                        "state": row[1]
-                    }
+                    data = data_output(key, row)
+                    print(data)
                     rows.append(data)
                 return rows
         except Exception as e:
@@ -45,8 +44,29 @@ class DB_start:
 
         except Exception as e:
             print('Error Connection: {}'.format(e))
-            count_rows = "Error"
+            list_dict = {"Error"}
         data = {
             "Result": list_dict
         }
         return data
+
+
+def data_output(key: str, row: str) -> dict:
+    key = "{}".format(key)
+    return {
+        key: row[0]
+    }
+
+
+def data_by_state(row: tuple) -> dict:
+    return {
+        "Simulations_id": row[0],
+        "State": row[1]
+    }
+
+
+def data_output_loss(row: tuple) -> dict:
+    return {
+        "seconds": row[0],
+        "loss": row[1]
+    }

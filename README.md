@@ -95,6 +95,17 @@ In this section I show some examples to be able to make requests to the API:
 
     curl -u Miguel:Barrios http://localhost:5000/count
 
+
+### Order By created_at
+
+    curl -u Miguel:Barrios -X GET http://localhost:5000/order_by/"created_at"
+
+
+### Insert Data
+
+    curl -u Miguel:Barrios -X POST http://localhost:5000/insert -H "Content-Type: application/json" -d '{"id": 12, "state": "pending", "fixture": "fixtures_010rth"}'
+
+
 ### Check id Simulations per State
 
 

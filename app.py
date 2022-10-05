@@ -1,9 +1,12 @@
 import os
 from flask import Flask, jsonify, request
+from sqlalchemy import insert
+
 from middleware import middleware
+from models import Simulations, Fixtures
 from utils.db_start import DB_start
 from utils.graphs import graphs
-from utils.queries import query_total_count, query_by_state, query_graph_loss
+from utils.queries import query_total_count, query_by_state, query_graph_loss, query_order_by
 
 app = Flask(__name__)
 dbdir = "sqlite:///" + os.path.abspath((os.getcwd()) + "data.db")
@@ -15,36 +18,46 @@ app.wsgi_app = middleware(app.wsgi_app)
 def count_simulations():
     db_start = DB_start(dbdir)
     query = query_total_count()
-    data = db_start.query_sim(query)
+    data = db_start.query_sim("Total", query)
     return jsonify(data)
 
 
 @app.route("/state", methods=['GET'])
 def state():
     data = request.get_json()
-    id_simulations = data['state']
+    state = data['state']
     db_start = DB_start(dbdir)
-    query = query_by_state(id_simulations)
-    result = db_start.query_sim(query)
-    data = {
-        "Simulations_id": result
-    }
+    query = query_by_state(state)
+    data = db_start.query_sim("State", query)
     return jsonify(data)
 
 
-@app.route("/")
-def listing():
-    return "<p>Hello, World!</p>"
+@app.route("/order_by/<term>", methods=['GET'])
+def orderby(term):
+    db_start = DB_start(dbdir)
+    query = query_order_by(term)
+    data = db_start.query_sim("Total", query)
+    return jsonify(data)
 
 
-@app.route("/")
-def fixtures_id():
-    return "<p>Hello, World!</p>"
-
-
-@app.route("/")
-def fixtures_info():
-    return "<p>Hello, World!</p>"
+@app.route("/insert", methods=['POST'])
+def insert_data():
+    data = request.get_json()
+    id_simulations = data['id']
+    state = data['state']
+    fixture = data['fixture']
+    insert(Simulations).values(
+        id_simulation=id_simulations,
+        state=state
+    )
+    insert(Fixtures).values(
+        id_simulation=id_simulations,
+        fixture=fixture
+    )
+    data = {
+        "id Inserted": id_simulations
+    }
+    return jsonify(data)
 
 
 @app.route("/graph", methods=['GET'])

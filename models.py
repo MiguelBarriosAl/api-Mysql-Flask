@@ -43,7 +43,7 @@ class Loss(db.Model):
 
 
 class DB_sqlite3:
-    def __init__(self, dbdir):
+    def __init__(self, dbdir: str):
         self.dbdir = dbdir
         self.engine = create_engine(dbdir)
 
