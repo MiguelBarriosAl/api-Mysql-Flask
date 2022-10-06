@@ -100,8 +100,11 @@ In this section I show some examples to be able to make requests to the API:
 
     curl -u Miguel:Barrios -X GET http://localhost:5000/order_by/"created_at"
 
+### List Machines in wich simulations can be run
 
-### Insert Data
+    curl -u Miguel:Barrios -X GET http://localhost:5000/fixtures
+
+### Create a new Simulation
 
     curl -u Miguel:Barrios -X POST http://localhost:5000/insert -H "Content-Type: application/json" -d '{"id": 12, "state": "pending", "fixture": "fixtures_010rth"}'
 

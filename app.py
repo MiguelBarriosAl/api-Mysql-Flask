@@ -1,16 +1,15 @@
 import os
+
 from flask import Flask, jsonify, request
 from sqlalchemy import insert
-
 from middleware import middleware
 from models import Simulations, Fixtures
 from utils.db_start import DB_start
 from utils.graphs import graphs
-from utils.queries import query_total_count, query_by_state, query_graph_loss, query_order_by
+from utils.queries import query_total_count, query_by_state, query_graph_loss, query_order_by, query_list_fixtures
 
 app = Flask(__name__)
 dbdir = "sqlite:///" + os.path.abspath((os.getcwd()) + "data.db")
-
 app.wsgi_app = middleware(app.wsgi_app)
 
 
@@ -37,6 +36,14 @@ def orderby(term):
     db_start = DB_start(dbdir)
     query = query_order_by(term)
     data = db_start.query_sim("Total", query)
+    return jsonify(data)
+
+
+@app.route("/fixtures", methods=['GET'])
+def fixture():
+    db_start = DB_start(dbdir)
+    query = query_list_fixtures()
+    data = db_start.query_fix(query)
     return jsonify(data)
 
 

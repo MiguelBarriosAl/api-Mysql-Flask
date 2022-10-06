@@ -13,3 +13,6 @@ def query_order_by(term: str):
 def query_graph_loss(id_simulation: int):
     return """SELECT seconds,loss FROM Loss WHERE id_simulation = %s """ % id_simulation
 
+
+def query_list_fixtures():
+    return """SELECT id_fixture, fixture FROM Fixtures"""

@@ -15,11 +15,27 @@ class DB_start:
         rows = []
         try:
             with self.engine.connect() as conn:
-                print(query)
                 result = conn.execute(text(query))
                 for row in result:
                     data = data_output(key, row)
-                    print(data)
+                    rows.append(data)
+                return rows
+        except Exception as e:
+            print('Error Connection: {}'.format(e))
+            rows = ["Error"]
+        data = rows
+        return data
+
+    def query_fix(self, query) -> list:
+        rows = []
+        try:
+            with self.engine.connect() as conn:
+                result = conn.execute(text(query))
+                for row in result:
+                    data = {
+                        "id_simulation": row[0],
+                        "fixture": row[1]
+                    }
                     rows.append(data)
                 return rows
         except Exception as e:
