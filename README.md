@@ -6,7 +6,7 @@
 - [Requirements](#Requirements)
 - [Installation](#Installation)
 - [Run](#Run)
-- [Api_rest](#Api Rest)
+- [Api_rest](#Services)
 
 # Introduction
 Backend project in which Api service has been integrated with Flask in which database information can be accessed through Api Rest client requests.
@@ -87,7 +87,7 @@ As I comment before, I have considered Sqlite for testing since it is a less pow
     cd \Api-Mysql-Flask
     python3 app.py
 
-# Api Rest
+# Services
 In this section I show some examples to be able to make requests to the API:
 
 
