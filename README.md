@@ -6,7 +6,7 @@
 - [Requirements](#Requirements)
 - [Installation](#Installation)
 - [Run](#Run)
-- [Api_rest](#Services)
+- [Services](#Services)
 
 # Introduction
 Backend project in which Api service has been integrated with Flask in which database information can be accessed through Api Rest client requests.
