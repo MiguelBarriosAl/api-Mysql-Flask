@@ -39,7 +39,7 @@ On the other hand, I have considered Sqlite for testing since it is a less power
 - SQLAlchemy==1.4.41
 
 # Middleware
-To be able to access with authorization to the requests, you must create a file with environment variable .env , which includes the following fields
+To be able to access with authorization to the requests, you must create a file with environment variable .env in `Api-Mysql-Flask/.env`, which includes the following fields
 
 - USER_MIDDLEWARE= 'Miguel'
 - PASS_MIDDLEWARE = 'Barrios'
