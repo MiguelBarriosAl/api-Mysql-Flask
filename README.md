@@ -9,8 +9,7 @@
 - [Services](#Services)
 
 # Introduction
-Backend project in which Api service has been integrated with Flask in which database information can be accessed through Api Rest client requests.
-
+The objective is to deploy in a PaaS service a language classifier through a RestApi service. For this purpose, FastApi has been used to consume the services from the client, Machine Learnig for language detection, Docker and Heroku for deployment in production.
 - Total registered executions
 - List existing Simulation runs, including those with pending status (waiting to be scheduled into a machine), running (already being allocated to a machine and being currently run) and finished (run completed).
 
